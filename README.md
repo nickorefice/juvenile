@@ -22,3 +22,6 @@ docker scout cves dockersales/scout-demo-service:nickorefice --ignore-base -> Ig
 
 How to fix?
 See fix version in 'vulnerabilities' tab in DD or output of 'docker scout cves ...'
+
+FROM alpine:3.15
+#FROM alpine:3.14@sha256:eb3e4e175ba6d212ba1d6e04fc0782916c08e1c9d7b45892e9796141b1d379ae
