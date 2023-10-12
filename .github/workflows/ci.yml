@@ -23,7 +23,7 @@ jobs:
       security-events: write
       actions: read
       contents: read
-
+      pull-requests: write
 
     steps:
       - name: Checkout repository
@@ -76,6 +76,7 @@ jobs:
           platforms: "linux/arm64"
           sbom: false
           provenance: false 
+          github-token: ${{ secrets.GH_TOKEN }} # to be able to write the comment
 
       - name: Analyze for critical and high CVEs
         id: docker-scout-cves
