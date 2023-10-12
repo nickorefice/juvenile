@@ -50,55 +50,12 @@ jobs:
             org.opencontainers.image.revision=${{ env.SHA }}
             com.docker.image.source.entrypoint=${{ env.DOCKERFILE_PATH }}
         
-      - name: Build and push Docker image on push
-        id: build-and-push
-        if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/build-push-action@v4
+      - name: Docker Scout
+        id: docker-scout
+        uses: docker/scout-action@v0.18
         with:
-          context: .
-          load: false
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: "linux/amd64,linux/arm64"
-          sbom: true
-          provenance: true
-
-      - name: Build and push Docker image on PR
-        id: build-and-push-pr
-        if: ${{ github.event_name == 'pull_request_target' }}
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          push: false
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: "linux/arm64"
-          sbom: false
-          provenance: false 
-
-      - name: Analyze for critical and high CVEs
-        id: docker-scout-cves
-        if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/scout-action@main
-        with:
-          command: cves
-          image: ${{ steps.meta.outputs.tags }}
-          sarif-file: sarif.output.json
-          platform: "linux/arm64"
-          summary: true
-        
-      - name: Compare to deployed image
-        id: docker-scout-compare
-        if: ${{ github.event_name == 'pull_request_target' }}
-        uses: docker/scout-action@main
-        with:
-          command: compare
-          image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
-          to: ${{ env.PROD_IMAGE }}
-          platform: "linux/arm64"
-          exit-code: true       
-          summary: false
-          organization: ${{ env.DOCKER_ORG }}
+          command: cves,recommendations,compare
+          to-latest: true
+          ignore-base: false
+          ignore-unchanged: true
+          only-fixed: true
