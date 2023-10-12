@@ -82,7 +82,7 @@ jobs:
         if: ${{ github.event_name != 'pull_request_target' }}
         uses: docker/scout-action@main
         with:
-          command: cves,recommendation
+          command: cves,recommendations
           image: ${{ steps.meta.outputs.tags }}
           sarif-file: sarif.output.json
           platform: "linux/arm64"
