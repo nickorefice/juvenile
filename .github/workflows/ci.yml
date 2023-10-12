@@ -59,3 +59,4 @@ jobs:
           ignore-base: false
           ignore-unchanged: true
           only-fixed: true
+          github-token: ${{ secrets.GH_TOKEN }} # to be able to write the comment
