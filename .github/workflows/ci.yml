@@ -99,5 +99,5 @@ jobs:
           to: ${{ env.PROD_IMAGE }}
           platform: "linux/arm64"
           exit-code: true       
-          summary: true
+          summary: false
           organization: ${{ env.DOCKER_ORG }}
