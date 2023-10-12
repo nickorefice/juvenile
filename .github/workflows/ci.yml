@@ -14,8 +14,6 @@ env:
   DOCKERFILE_PATH: Dockerfile
   PROD_IMAGE: demonstrationorg/juvenile:main
 
-    
-
 jobs:
   build:
     runs-on: ubuntu-latest
