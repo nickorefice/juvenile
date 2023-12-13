@@ -1,20 +1,44 @@
-# juvenile
+# Introduction
 
 Repository to demo Docker Scout. 
 
-This service is vulnerable to a couple of application level CVEs as well as some CVEs from the base image. The repository can be used to talk through discovering and remediating CVEs via direct package update and by using base image update recommendation.
+This service is vulnerable application level and base image CVE's. The repository can be used to test index and remediation of vulnerabilities using Docker Scout.
 
 ## Resources:
+* [Docker Scout Overview] (https://docs.docker.com/scout/)
 
-* [Demo walkthrough](https://docs.google.com/document/d/1iOD9GxuowNdts_6GoYQZAn0tZ1U2NlL80R0dD9p8Pek/edit#heading=h.cwbhwl5pgrqf)
-* [Demo training recording](https://docker.zoom.us/rec/share/jLyBiTCBxxaVF4w5BB4AvrMsS7ZXBfwJsJir8DY2hWHzEK1qAHfUrnsV97HEC6A.Dx72GwfNdMFadOB0) - password: yHi@8BA!
+## Steps
+
+### Initial setup
+1. Clone repository: 
+`git clone norefice-github/juvenile`
+2. Traverse to directory:
+`cd juvenile`
+3. Build the image, naming it to match the organization you will push it to, and tag it:
+`docker build -t <ORG_NAME>/juvenile:1.0 .`
+4. Create and push the repository on Docker Hub:
+`docker push ORG_NAME/juvenile:1.0`
+
+### CLI Demonstration steps
+1. Traverse to directory:
+`cd juvenile`
+2. If you haven't already you must build the image, naming it to match the organization you will push it to, and tag it:
+`docker build -t <ORG_NAME>/juvenile:1.0 .`
+3. Invoke Scout index. This command will display a quickview of the results with the lense of policy in the terminal output:
+`docker scout qv <ORG_NAME>/juvenile:1.0`
+4. Invoke Scout index, display CVE's and filter out base image vulnerabilities:
+`docker scout cves --ignore-base`
+  - Remediation can be performed by navigating to  `package.json` and changing `"express":"4.17.1"` to `"express": "4.17.3"` as suggested by Scout in the terminal output. 
+  - Executing the Scout command again should no longer result in application layer vulnerabilities.
+5. Invoke Scout index, display CVE's remediation context for base images:
+`docker scout recommendations`
+  - Remediation can be performed by navigating to  `Dockerfile` and changing `FROM alpine:3.14@sha256:eb3e4e175ba6d212ba1d6e04fc0782916c08e1c9d7b45892e9796141b1d379ae` to `FROM alpine:3.16` as suggested by Scout in the terminal output. 
+  - Executing the Scout command again should no longer result in base layer vulnerabilities.
 
 
 
-# Nick's steps
+### CLI Demonstration steps
 
-
-docker build . -f Dockerfile -t nicholasorefice126/scout-demo-service:nickorefice
 
 docker scout cves dockersales/scout-demo-service:nickorefice -> Noisy - show base image results
 
