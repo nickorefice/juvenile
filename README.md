@@ -5,7 +5,7 @@ Repository to demo Docker Scout.
 This service is vulnerable application level and base image CVE's. The repository can be used to test index and remediation of vulnerabilities using Docker Scout.
 
 ## Resources:
-* [Docker Scout Overview] (https://docs.docker.com/scout/)
+* [Docker Scout Overview](https://docs.docker.com/scout/)
 
 ## Steps
 
@@ -37,7 +37,7 @@ This service is vulnerable application level and base image CVE's. The repositor
 
 
 
-### CLI Demonstration steps
+### GUI Demonstration steps
 
 
 docker scout cves dockersales/scout-demo-service:nickorefice -> Noisy - show base image results
