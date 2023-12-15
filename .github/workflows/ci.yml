@@ -98,6 +98,6 @@ jobs:
           only-severities: critical,high
           to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
           platform: "linux/arm64"
-          exit-code: true       
+          exit-on: true       
           summary: true
           organization: ${{ env.DOCKER_ORG }}
