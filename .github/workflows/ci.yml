@@ -79,7 +79,7 @@ jobs:
 
       - name: Analyze for critical and high CVEs
         id: docker-scout-cves
-        if: ${{ github.event_name != 'pull_request_target' }}
+        if: ${{ github.event_name == 'pull_request_target' }}
         uses: docker/scout-action@main
         with:
           command: cves,recommendations
@@ -90,7 +90,7 @@ jobs:
         
       - name: Compare to deployed image
         id: docker-scout-compare
-        if: ${{ github.event_name == 'pull_request_target' }}
+        if: ${{ github.event_name != 'pull_request_target' }}
         uses: docker/scout-action@main
         with:
           command: compare
