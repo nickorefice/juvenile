@@ -50,5 +50,7 @@ Thumbs.db
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
-sysdigcommands.sh
+sonarcommands.md
+sysdigcommands.md
+.scannerwork
+out

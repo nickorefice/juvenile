@@ -86,3 +86,23 @@ docker scout cves registry://demonstrationorg/juvenile:1.1.3  --platform linux/a
 
 # Finally, to prove those other unaffected cves false-positive are still in there 
 docker scout cves registry://demonstrationorg/juvenile:1.1.3  --platform linux/amd64 --org demonstrationorg
+
+# To output with attestation and SBOM
+## Creating a BuildKit Container
+docker buildx create --use --name=buildkit-container --driver=docker-container
+
+## Generating an SBOM
+# Generating an SBOM at Container Build Time
+The following command will build the Dockerfile in the current directory and create an out directory with a SPDX based JSON file representing your SBOM. It will also generate an attestation that proves the provenance of the image.
+
+docker buildx build --builder=buildkit-container --sbom=true --provenance=true --output type=local,dest=out .
+
+Once you've verified your SBOM output locally, you can build, attest, generate an SBOM, and push it to your registry with the following command.
+
+docker buildx build --builder=buildkit-container --tag demonstrationorg/juvenile:2.1.0 --attest=type=sbom --attest=type=provenance --push .
+
+## Generating an SBOM from an Image
+If you need to generate an SBOM from an image that has already been built, you can do so with the following command.
+
+docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"
+
