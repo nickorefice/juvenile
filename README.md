@@ -1,13 +1,11 @@
 # Introduction
 
-Repository to demo Docker Scout. 
-
-This service is vulnerable application level and base image CVE's. The repository can be used to test index and remediation of vulnerabilities using Docker Scout.
+Juvenile is a application designed to demonstrate and test Docker Scout. This service is vulnerable application level and base image CVE's. 
 
 ## Resources:
 * [Docker Scout Overview](https://docs.docker.com/scout/)
 
-## Steps
+## Demonstrating Steps
 
 ### Initial setup
 1. Clone repository: 
@@ -48,22 +46,19 @@ This service is vulnerable application level and base image CVE's. The repositor
 8. Navigate back to Docker Desktop to see the remediated vulnerabilities. 
 
 ### Supply chain attestation
-
-# To output with attestation and SBOM 
 ## Creating a BuildKit Container
 docker buildx create --use --name=buildkit-container --driver=docker-container
 
-## Generating an SBOM
-# Generating an SBOM at Container Build Time
+### Generating an SBOM at Container Build Time
 The following command will build the Dockerfile in the current directory and create an out directory with a SPDX based JSON file representing your SBOM. It will also generate an attestation that proves the provenance of the image.
 
-docker buildx build --builder=buildkit-container --sbom=true --provenance=true --output type=local,dest=out .
+`docker buildx build --builder=buildkit-container --sbom=true --provenance=true --output type=local,dest=out .`
 
 Once you've verified your SBOM output locally, you can build, attest, generate an SBOM, and push it to your registry with the following command.
 
-docker buildx build --builder=buildkit-container --tag demonstrationorg/juvenile:2.1.0 --attest=type=sbom --attest=type=provenance --push .
+`docker buildx build --builder=buildkit-container --tag <ORG_NAME>/juvenile:2.1.0 --attest=type=sbom --attest=type=provenance --push .`
 
-## Generating an SBOM from an Image
+### Generating an SBOM from an Image
 If you need to generate an SBOM from an image that has already been built, you can do so with the following command.
 
 docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"
