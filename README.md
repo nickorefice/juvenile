@@ -47,7 +47,7 @@ Juvenile is a application designed to demonstrate and test Docker Scout. This se
 
 ### Supply chain attestation
 ### Creating a BuildKit Container
-docker buildx create --use --name=buildkit-container --driver=docker-container
+`docker buildx create --use --name=buildkit-container --driver=docker-container`
 
 ### Generating an SBOM at Container Build Time
 The following command will build the Dockerfile in the current directory and create an out directory with a SPDX based JSON file representing your SBOM. It will also generate an attestation that proves the provenance of the image.
