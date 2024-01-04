@@ -61,5 +61,5 @@ Once you've verified your SBOM output locally, you can build, attest, generate a
 ### Generating an SBOM from an Image
 If you need to generate an SBOM from an image that has already been built, you can do so with the following command.
 
-docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"
+`docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"`
 
