@@ -46,7 +46,7 @@ Juvenile is a application designed to demonstrate and test Docker Scout. This se
 8. Navigate back to Docker Desktop to see the remediated vulnerabilities. 
 
 ### Supply chain attestation
-## Creating a BuildKit Container
+### Creating a BuildKit Container
 docker buildx create --use --name=buildkit-container --driver=docker-container
 
 ### Generating an SBOM at Container Build Time
