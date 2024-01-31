@@ -66,6 +66,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           sbom: true
           provenance: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push Docker image on PR
         id: build-and-push-pr
@@ -82,7 +84,7 @@ jobs:
           provenance: false 
           github-token: ${{ secrets.GH_TOKEN }} # to be able to write the comment
 
-      - name: Analyze for critical and high CVEs
+      - name: Compare to deployed image
         id: docker-scout-cves
         if: ${{ github.event_name == 'pull_request_target' }}
         uses: docker/scout-action@main
@@ -93,17 +95,15 @@ jobs:
           platform: "linux/arm64"
           summary: true
           exit-on: vulnerability       
+          to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
 
         
-      - name: Compare to deployed image
+      - name: Analyze for critical and high CVEs
         id: docker-scout-compare
         if: ${{ github.event_name != 'pull_request_target' }}
         uses: docker/scout-action@main
         with:
           command: cves,recommendations
           image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
-          to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
-          platform: "linux/arm64"
           summary: true
           organization: ${{ env.DOCKER_ORG }}
