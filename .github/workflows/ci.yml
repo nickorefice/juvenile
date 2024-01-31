@@ -99,7 +99,7 @@ jobs:
 
         
       - name: Analyze for critical and high CVEs
-        id: docker-scout-compare
+        id: docker-scout
         if: ${{ github.event_name != 'pull_request_target' }}
         uses: docker/scout-action@main
         with:
@@ -107,3 +107,5 @@ jobs:
           image: ${{ steps.meta.outputs.tags }}
           summary: true
           organization: ${{ env.DOCKER_ORG }}
+          platform: "linux/arm64"
+	
