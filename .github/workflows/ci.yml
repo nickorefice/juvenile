@@ -107,5 +107,3 @@ jobs:
           image: ${{ steps.meta.outputs.tags }}
           summary: true
           organization: ${{ env.DOCKER_ORG }}
-          platform: "linux/arm64"
-	
