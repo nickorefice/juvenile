@@ -23,6 +23,11 @@ jobs:
       actions: read
       contents: read
       pull-requests: write
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
 
     steps:
       - name: Checkout repository
@@ -51,14 +56,14 @@ jobs:
       - name: Build and push Docker image on push
         id: build-and-push
         if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           load: false
           push: true
+          platforms: ${{ matrix.platform }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: "linux/arm64"
           sbom: true
           provenance: true
 
@@ -87,6 +92,8 @@ jobs:
           sarif-file: sarif.output.json
           platform: "linux/arm64"
           summary: true
+          exit-on: vulnerability       
+
         
       - name: Compare to deployed image
         id: docker-scout-compare
@@ -98,6 +105,5 @@ jobs:
           only-severities: critical,high
           to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
           platform: "linux/arm64"
-          exit-on: vulnerability       
           summary: true
           organization: ${{ env.DOCKER_ORG }}
