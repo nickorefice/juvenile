@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY: docker.io
   DOCKER_ORG: demonstrationorg
-  IMAGE_NAME: demonstrationorg/juvenile
+  REGISTRY_IMAGE: demonstrationorg/juvenile
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
   DOCKERFILE_PATH: Dockerfile
   COMPARE_TAG: latest
