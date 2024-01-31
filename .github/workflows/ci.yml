@@ -83,27 +83,3 @@ jobs:
           sbom: false
           provenance: false 
           github-token: ${{ secrets.GH_TOKEN }} # to be able to write the comment
-
-      - name: Compare to deployed image
-        id: docker-scout-cves
-        if: ${{ github.event_name == 'pull_request_target' }}
-        uses: docker/scout-action@main
-        with:
-          command: compare
-          image: ${{ steps.meta.outputs.tags }}
-          sarif-file: sarif.output.json
-          platform: "linux/arm64"
-          summary: true
-          exit-on: vulnerability       
-          to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
-
-        
-      - name: Analyze for critical and high CVEs
-        id: docker-scout
-        if: ${{ github.event_name != 'pull_request_target' }}
-        uses: docker/scout-action@main
-        with:
-          command: cves,recommendations
-          image: ${{ steps.meta.outputs.tags }}
-          summary: true
-          organization: ${{ env.DOCKER_ORG }}
