@@ -65,3 +65,9 @@ If you need to generate an SBOM from an image that has already been built, you c
 `docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"`
 
 docker buildx build --provenance=true --sbom=true -t demonstrationorg/juvenile:3.1.0 . 
+
+
+# Run locally
+docker buildx build --provenance=true --sbom=true -t demonstrationorg/juvenile:demo . 
+
+docker run -dp 3000:3000 demonstrationorg/juvenile:demo 
