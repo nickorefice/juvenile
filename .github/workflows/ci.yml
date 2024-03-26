@@ -88,6 +88,7 @@ jobs:
         id: docker-scout
         uses: docker/scout-action@v1
         with:
-          command: cves,recommendations
-          only-fixed: true
+          command: cves,recommendations, compare
+          to-latest: true
+          write-comment: true
           exit-on: policy
