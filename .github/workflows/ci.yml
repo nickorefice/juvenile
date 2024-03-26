@@ -92,3 +92,4 @@ jobs:
           to-latest: true
           write-comment: true
           exit-on: policy
+          organization: demonstrationorg
