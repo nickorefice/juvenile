@@ -89,7 +89,4 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations
-          to-env: prod
-          write-comment: true
-          exit-on: policy
           organization: demonstrationorg
