@@ -89,7 +89,6 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations
-          image: ${{ steps.meta.outputs.tags }}
           to-env: prod
           write-comment: true
           exit-on: policy
