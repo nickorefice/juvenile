@@ -70,8 +70,8 @@ jobs:
           context: . 
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }},push-by-digest=true,name-canonical=true,push=true
-      
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }},push=true
+          push: true
             
       - name: Export digest
         run: |
