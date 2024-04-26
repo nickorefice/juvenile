@@ -10,8 +10,7 @@ on:
 env:
   REGISTRY: docker.io
   DOCKER_ORG: demonstrationorg
-  IMAGE_NAME: demonstrationorg/juvenile
-  REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+  REGISTRY_IMAGE: demonstrationorg/juvenile
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
   DOCKERFILE_PATH: Dockerfile
   COMPARE_TAG: latest
@@ -69,8 +68,7 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }},push=true
-          push: true
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
           
       - name: Export digest
         run: |
