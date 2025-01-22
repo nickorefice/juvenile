@@ -2,8 +2,6 @@
 
 Juvenile is a application designed to demonstrate and test Docker Scout. This service is vulnerable application level and base image CVE's. 
 
-
-
 ## Resources:
 * [Docker Scout Overview](https://docs.docker.com/scout/)
 
